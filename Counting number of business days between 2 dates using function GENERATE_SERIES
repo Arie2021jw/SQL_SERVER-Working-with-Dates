@@ -1,0 +1,26 @@
+Exercise #1: Calculate the number of business days between the oldest and youngest employees.
+
+
+Solution #1: We calculate the difference of days between 2 dates (BirthDate for oldest and youngest employees) using function GENERATE_SERIES.
+
+Tale used: [AdventureWorks2022].[HumanResources].[Employee]
+
+SELECT FORMAT(COUNT(*),'#,#') AS CountWeekdays
+FROM (
+	SELECT X.GeneratedDates
+	, DATENAME(weekday, X.GeneratedDates) AS Weekdays
+	FROM
+		(
+		SELECT CAST(DATEADD(DAY, value, (SELECT MIN(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee])) AS DATE) AS GeneratedDates
+		FROM GENERATE_SERIES(0, DATEDIFF(DAY,(SELECT MIN(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee]), (SELECT MAX(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 1) 
+		) AS X
+	WHERE DATENAME(weekday, X.GeneratedDates) NOT IN ('Saturday','Sunday')
+	) AS Y
+
+
+	-- OUTPUT
+CountWeekdays
+10,338
+(end of results)
+(1 row affected)
+
