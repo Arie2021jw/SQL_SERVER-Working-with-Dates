@@ -1,14 +1,17 @@
 Exercise #1: Calculate the number of days between hiring dates for departmentID "11" based on seniority.
 
 
-Solution #1: We count the number of business days between 2 HireDates (current row and next record) for employees of departmentID "11".
+Solution #1: We count the number of business days between 2 HireDates (current row and next record) for employees of departmentID "11" using the window function LEAD().
 
+Tables used: 
+1) [AdventureWorks2022].[HumanResources].[Employee]
+2) [AdventureWorks2022].[HumanResources].[EmployeeDepartmentHistory]
+3) [AdventureWorks2022].[HumanResources].[Department]
 
-Table used: [AdventureWorks2022].[HumanResources].[Employee]
+[AdventureWorks2022].[HumanResources].[Employee]
 
-	Query #1: We count the number of days between 2 dates using function GENERATE_SERIES
+	Query #1: We count the number of days between current row and next record using window function LEAD() within a Common Table Expression (CTEs)
 	---------
-
 WITH 
 OriginalTablesLevel1 AS 
 (
