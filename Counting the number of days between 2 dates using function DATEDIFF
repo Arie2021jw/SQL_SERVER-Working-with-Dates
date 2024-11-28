@@ -5,7 +5,7 @@ Solution #1: We calculate the difference of days between 2 dates using function 
 
 Table used: [AdventureWorks2022].[HumanResources].[Employee]
 
-SELECT FORMAT(DATEDIFF(DAY, OldestEmployee, YoungestEmployee), '#,#') AS NumberDaysDifference
+SELECT FORMAT(DATEDIFF(DAY, OldestEmployee, YoungestEmployee) + 1, '#,#') AS NumberDaysDifference
 FROM (
 	SELECT MAX(BirthDate) AS YoungestEmployee
 	, MIN(BirthDate) AS OldestEmployee
@@ -15,6 +15,6 @@ FROM (
 
 	-- OUTPUT
 NumberDaysDifference
-14,471
+14,472
 (end of results)
 (1 row affected)
