@@ -1,22 +1,23 @@
 Exercise #1: Calculate the number of business days between the oldest and youngest employees.
 
 
+Exercise #1: Calculate the number of business days between the oldest and youngest employees.
+
+Table used: [AdventureWorks2022].[HumanResources].[Employee]
+
 Solution #1: We calculate the difference of days between 2 dates (BirthDate for oldest and youngest employees) using function GENERATE_SERIES.
 
-Tale used: [AdventureWorks2022].[HumanResources].[Employee]
-
-SELECT FORMAT(COUNT(*),'#,#') AS CountWeekdays
+SELECT FORMAT(COUNT(*),'#,#') AS CountWeekdays					-- ListGeneratedWeekDatesLevel2
 FROM (
-	SELECT X.GeneratedDates
+	SELECT X.GeneratedDates									-- ListGeneratedDatesLevel1
 	, DATENAME(weekday, X.GeneratedDates) AS Weekdays
 	FROM
 		(
 		SELECT CAST(DATEADD(DAY, value, (SELECT MIN(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee])) AS DATE) AS GeneratedDates
 		FROM GENERATE_SERIES(0, DATEDIFF(DAY,(SELECT MIN(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee]), (SELECT MAX(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 1) 
-		) AS X
+		) AS X										-- ListGeneratedDatesLevel1
 	WHERE DATENAME(weekday, X.GeneratedDates) NOT IN ('Saturday','Sunday')
-	) AS Y
-
+	) AS Y																											-- ListGeneratedWeekDatesLevel2
 
 	-- OUTPUT
 CountWeekdays
@@ -24,3 +25,78 @@ CountWeekdays
 (end of results)
 (1 row affected)
 
+
+
+
+Below are the queries used step-by-step for this solution.
+
+	Query #1.1: We retrieve the BirthDate for oldest and youngest employees
+	-----------
+SELECT MIN(BirthDate) AS OldestEmployee FROM [AdventureWorks2022].[HumanResources].[Employee];
+SELECT MAX(BirthDate) AS YoungestEmployee FROM [AdventureWorks2022].[HumanResources].[Employee];
+
+	-- OUTPUT #1:
+OldestEmployee
+1951-10-17
+(end of results)
+(1 row affected)
+
+	-- OUTPUT #2:
+YoungestEmployee
+1991-05-31
+(end of results)
+(1 row affected)
+
+
+
+	Query #1.2: We generate the list of dates between oldest and youngest employees's BirthDate using function GENERATE_SERIES
+	-----------
+SELECT CAST(DATEADD(	DAY, 
+			value, 
+			(SELECT MIN(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee])
+	) AS DATE) AS GeneratedDates
+FROM GENERATE_SERIES(
+			0, 
+			DATEDIFF(DAY,(SELECT MIN(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee]), (SELECT MAX(BirthDate) FROM [AdventureWorks2022].[HumanResources].[Employee]))
+			, 1
+			)
+
+
+	-- OUTPUT
+GeneratedDates
+10/17/1951
+10/18/1951
+10/19/1951
+10/20/1951
+10/21/1951
+...................TRUNCATED RESULTS ......
+5/27/1991
+5/28/1991
+5/29/1991
+5/30/1991
+5/31/1991
+(end of results)
+(14472 rows affected)
+
+
+
+	Query #1.2.1: If needed, we can also verify the list of generated dates by "manually" typing in the dates into the function 
+
+SELECT CAST(DATEADD(DAY, value, '1951-10-17') AS DATE) AS GeneratedDates
+FROM GENERATE_SERIES(0, DATEDIFF(DAY,'1951-10-17', '1991-05-31'), 1);
+
+	-- OUTPUT
+GeneratedDates
+10/17/1951
+10/18/1951
+10/19/1951
+10/20/1951
+10/21/1951
+...................TRUNCATED RESULTS ......
+5/27/1991
+5/28/1991
+5/29/1991
+5/30/1991
+5/31/1991
+(end of results)
+(14472 rows affected)
