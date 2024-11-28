@@ -1,7 +1,7 @@
 Exercise #1: Calculate the number of days between the oldest and youngest employees.
 
 
-Solution #1: We calculate the difference of days between 2 dates using the function DateDiff
+Solution #1: We calculate the difference of days between 2 dates using the function DATEDIFF.
 
 Table used: [AdventureWorks2022].[HumanResources].[Employee]
 
