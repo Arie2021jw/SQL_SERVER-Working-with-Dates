@@ -61,7 +61,6 @@ Warning: Null value is eliminated by an aggregate or other SET operation.
 
 Below are the queries used step-by-step for this solution.
 
-
 	Query #1.1: We generate the list of dates between 01-Dec-2024 and 31-Dec-2024 using functions DATEADD, MONTH, DATEDIFF, GETDATE
 	-----------
 SELECT CAST(DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) AS DATE) AS FirstDayofCurrentMonth
@@ -92,7 +91,7 @@ FROM GENERATE_SERIES(0
 				, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
 		    , 1)			-- GenerateDatesInYear_1_Dec_31_DecLevel1
 
-
+	-- OUTPUT
 GeneratedDates
 12/1/2024
 12/2/2024
@@ -137,7 +136,6 @@ SELECT DATENAME(WEEKDAY, X.GeneratedDates) AS GeneratedWeekDays				-- GenerateWe
 					, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
 			     , 1)			-- GenerateDatesInYear_1_Dec_31_DecLevel1
 	) AS X									-- GenerateWeekDaysLevel2
-
 
 	-- OUTPUT
 GeneratedWeekDays	GeneratedDates	DayOfMonth	CurrentMonth	DayOfWeek	ISOWeek
@@ -208,7 +206,6 @@ FROM (
 				     , 1)		-- GenerateDatesInYear_1_Dec_31_DecLevel1
 		) AS X						-- GenerateWeekDaysLevel2
 	) AS Y								-- PivotDatesCurrentMonthIntoDaysOfWeekLevel3
-
 
 	-- OUTPUT
 Mo	Tu	We	Th	Fr	Sa	Su
