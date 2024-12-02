@@ -47,7 +47,7 @@ Sunday			12/29/2024
 
 Below are the queries used step-by-step for this solution.
 
-	Query #1.1: We generate the list of dates between 01-Jan-2024 and 31-Dec-2024 using using function GENERATE_SERIES
+	Query #1.1: We generate the list of dates between 01-Jan-2024 and 31-Dec-2024 using function GENERATE_SERIES
 	-----------
 SELECT										-- GenerateDatesInYear_1_Jan_31_DecLevel1
 CAST(DATEADD(DAY, value, (SELECT DISTINCT DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])) AS DATE) AS GeneratedDates
