@@ -1,5 +1,6 @@
-Solution #1: We retrieve the date of the first and last Tuesday of the current month using function GENERATE_SERIES.
+Exercise #1: Retrieve the date of the first and last occurrences of a specific weekday in a month.
 
+Solution #1: We retrieve the date of the first and last Tuesday of the current month using function GENERATE_SERIES.
 
 Table used: [AdventureWorks2022].[Person].[BusinessEntity]
 
@@ -9,24 +10,24 @@ SELECT Y.GeneratedWeekDays						                                              --
 , MIN(Y.GeneratedDates) AS DateFirstTuesdayCurrentMonth
 , MAX(Y.GeneratedDates) AS DateLastTuesdayCurrentMonth
 FROM(
-	SELECT DATENAME(weekday, X.GeneratedDates) AS GeneratedWeekDays			       -- GenerateWeekDaysLevel2
+	SELECT DATENAME(weekday, X.GeneratedDates) AS GeneratedWeekDays			     		  -- GenerateWeekDaysLevel2
 	, X.GeneratedDates
 	, CASE	WHEN DATENAME(weekday, X.GeneratedDates) = 'Tuesday'
 			THEN 1 
 			ELSE 0
 			END AS IS_Tuesday
 	FROM (
-		SELECT										                                  -- GenerateDatesInYear_1_Jan_31_DecLevel1
+		SELECT									-- GenerateDatesInYear_1_Jan_31_DecLevel1
 		CAST(DATEADD(DAY, value, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])) AS DATE) AS GeneratedDates
 		FROM GENERATE_SERIES(0
 							, DATEDIFF(DAY
 								, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])
 								, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
-									, 1)			                                    -- GenerateDatesInYear_1_Jan_31_DecLevel1
-		) AS X									                                                  -- GenerateWeekDaysLevel2
+									, 1)		-- GenerateDatesInYear_1_Jan_31_DecLevel1
+		) AS X									      		-- GenerateWeekDaysLevel2
 	) AS Y
 WHERE Y.IS_Tuesday = 1
-GROUP BY Y.GeneratedWeekDays					                                              -- DatesForFirstLastTuesdaysCurrentMonthLevel4
+GROUP BY Y.GeneratedWeekDays					                                             	 -- DatesForFirstLastTuesdaysCurrentMonthLevel4
 
 
 	-- OUTPUT
@@ -126,7 +127,7 @@ Sunday			12/8/2024		0
 Monday			12/9/2024		0
 Tuesday			12/10/2024		1
 Wednesday		12/11/2024		0
-...................TRUNCATED RESULTS ......
+..........................................................TRUNCATED RESULTS ......
 Monday			12/23/2024		0
 Tuesday			12/24/2024		1
 Wednesday		12/25/2024		0
@@ -163,7 +164,6 @@ FROM (
 		) AS X									-- GenerateWeekDaysLevel2
 	) AS Y
 WHERE Y.IS_Tuesday = 1					-- KeepOnlyTuesdaysLevel3
-
 
 
 	-- OUTPUT
