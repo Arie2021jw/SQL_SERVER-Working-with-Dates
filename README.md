@@ -7,3 +7,4 @@ List of examples:
 4) Counting the number of days between 2 dates using function DATEDIFF.
 5) Counting the number of days between hiring days between current row and next record using the window function LEAD.
 6) Counting the number of days in a year using functions GETDATE, DATEADD, DATEDIFF.
+7) Counting the number of occurrences for every weekday in a year using function GENERATE_SERIES.
