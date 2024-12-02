@@ -1,7 +1,7 @@
 Exercise #1: Count the number of days in a year.
 
 
-Solution #1: We count the number of days of a year using the functions GETDATE, DATEADD, DATEDIFF and 1 subquery
+Solution #1: We count the number of days of a year using the functions GETDATE, DATEADD, DATEDIFF and 1 subquery.
 
 Table used: [AdventureWorks2022].[Person].[BusinessEntity]
 
