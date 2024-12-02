@@ -8,5 +8,6 @@ List of examples:
 5) Counting the number of days between hiring days between current row and next record using the window function LEAD.
 6) Counting the number of days in a year using functions GETDATE, DATEADD, DATEDIFF.
 7) Counting the number of occurrences for every weekday in a year using function GENERATE_SERIES.
-8) Retrieving dates of a specific weekday in a year using function GENERATE_SERIES.
-9) Retrieving dates of first and last occurrences for a specific weekday in a month using function GENERATE_SERIES.
+8) Creating a calendar for current month using function GENERATE_SERIES, DATE functions, AGGREGATION functions, pivoting via CASE statements
+9) Retrieving dates of a specific weekday in a year using function GENERATE_SERIES.
+10) Retrieving dates of first and last occurrences for a specific weekday in a month using function GENERATE_SERIES.
