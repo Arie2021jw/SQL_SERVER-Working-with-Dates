@@ -17,13 +17,13 @@ FROM(
 			ELSE 0
 			END AS IS_Tuesday
 	FROM (
-		SELECT									-- GenerateDatesInYear_1_Jan_31_DecLevel1
+		SELECT									-- GenerateDatesInYear_1_Dec_31_DecLevel1
 		CAST(DATEADD(DAY, value, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])) AS DATE) AS GeneratedDates
 		FROM GENERATE_SERIES(0
 							, DATEDIFF(DAY
 								, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])
 								, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
-									, 1)		-- GenerateDatesInYear_1_Jan_31_DecLevel1
+									, 1)		-- GenerateDatesInYear_1_Dec_31_DecLevel1
 		) AS X									      		-- GenerateWeekDaysLevel2
 	) AS Y
 WHERE Y.IS_Tuesday = 1
@@ -62,13 +62,13 @@ LastDayofCurrentMonth
 
 	Query #1.2: We generate the list of dates between 01-Dec-2024 and 31-Dec-2024 using function GENERATE_SERIES
 	-----------
-SELECT										-- GenerateDatesInYear_1_Jan_31_DecLevel1
+SELECT										-- GenerateDatesInYear_1_Dec_31_DecLevel1
 CAST(DATEADD(DAY, value, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])) AS DATE) AS GeneratedDates
 FROM GENERATE_SERIES(0
 					, DATEDIFF(DAY
 						, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])
 						, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
-							, 1)			-- GenerateDatesInYear_1_Jan_31_DecLevel1
+							, 1)			-- GenerateDatesInYear_1_Dec_31_DecLevel1
 
 
 	-- OUTPUT
@@ -104,13 +104,13 @@ SELECT DATENAME(weekday, X.GeneratedDates) AS GeneratedWeekDays			-- GenerateWee
 		ELSE 0
 		END AS IS_Tuesday
 FROM (
-	SELECT										-- GenerateDatesInYear_1_Jan_31_DecLevel1
+	SELECT										-- GenerateDatesInYear_1_Dec_31_DecLevel1
 	CAST(DATEADD(DAY, value, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])) AS DATE) AS GeneratedDates
 	FROM GENERATE_SERIES(0
 						, DATEDIFF(DAY
 							, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])
 							, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
-								, 1)			-- GenerateDatesInYear_1_Jan_31_DecLevel1
+								, 1)			-- GenerateDatesInYear_1_Dec_31_DecLevel1
 	) AS X									-- GenerateWeekDaysLevel2
 
 
@@ -154,13 +154,13 @@ FROM (
 			ELSE 0
 			END AS IS_Tuesday
 	FROM (
-		SELECT										-- GenerateDatesInYear_1_Jan_31_DecLevel1
+		SELECT										-- GenerateDatesInYear_1_Dec_31_DecLevel1
 		CAST(DATEADD(DAY, value, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])) AS DATE) AS GeneratedDates
 		FROM GENERATE_SERIES(0
 							, DATEDIFF(DAY
 								, (SELECT DISTINCT DATEADD(MONTH, DATEDIFF(MONTH, 0, GETDATE()), 0) FROM [AdventureWorks2022].[Person].[BusinessEntity])
 								, (SELECT DISTINCT DATEADD(MONTH,DATEDIFF(MONTH, -1, GETDATE()),-1) FROM [AdventureWorks2022].[Person].[BusinessEntity]))
-									, 1)			-- GenerateDatesInYear_1_Jan_31_DecLevel1
+									, 1)			-- GenerateDatesInYear_1_Dec_31_DecLevel1
 		) AS X									-- GenerateWeekDaysLevel2
 	) AS Y
 WHERE Y.IS_Tuesday = 1					-- KeepOnlyTuesdaysLevel3
