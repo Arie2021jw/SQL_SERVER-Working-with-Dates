@@ -14,3 +14,4 @@ List of examples:
 11) Retrieving dates of first and last occurrences for a specific weekday in a month using function GENERATE_SERIES.
 12) Retrieving start and end dates for a specific quarter using functions MODULUS (%), DATEADD, MONTH, DAY, CAST, LEFT and UNION ALL operator.
 13) Retrieving start and end dates for all 4 quarters in a year using functions DATEADD, DATEDIFF, DAY, QUARTER, YEAR, GETDATE and 1 iteration.
+14) Retrieving the list employees that were hired on the same date along with at least other 4 employees using a Cartesian Product, DATETIME functions and COUNT function.
