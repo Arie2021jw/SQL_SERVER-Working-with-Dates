@@ -1,7 +1,7 @@
 Exercise #1: Retrieve the start and end dates for all quarters in a year
 
 
-Solution #1: We retrieve the start and end dates for all 4 quarters of current year using using functions DATEADD, DATEDIFF, DAY, QUARTER, YEAR, GETDATE and 1 iteration.
+Solution #1: We retrieve the start and end dates for all 4 quarters of current year using functions DATEADD, DATEDIFF, DAY, QUARTER, YEAR, GETDATE and 1 iteration.
 
 Table used: [AdventureWorks2022].[Person].[BusinessEntity]
 
