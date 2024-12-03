@@ -35,18 +35,15 @@ QuarterNum	QtrStartDate	QtrEndDate
 
 
 
-
 Below are the queries used step-by-step for this solution.
-
 
 	Query #1.1: We generate the start and end dates that will function as an anchor to calculate the dates for all quarters
 list of dates between 01-Dec-2024 and 31-Dec-2024 using functions DATEADD, MONTH, DATEDIFF, GETDATE
 	-----------
-	SELECT									-- QuarterStartEndDatesLevel1
-	    DISTINCT DATEADD(QUARTER, DATEDIFF(QUARTER, 0, DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)) + 0, 0) AS Quarter1StartDate
-	    , DATEADD(DAY, - 1 , DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)) AS Quarter1EndDate
-	FROM [AdventureWorks2022].[Person].[BusinessEntity]			-- QuarterStartEndDatesLevel1
-
+SELECT									-- QuarterStartEndDatesLevel1
+DISTINCT DATEADD(QUARTER, DATEDIFF(QUARTER, 0, DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)) + 0, 0) AS Quarter1StartDate
+, DATEADD(DAY, - 1 , DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)) AS Quarter1EndDate
+FROM [AdventureWorks2022].[Person].[BusinessEntity]			-- QuarterStartEndDatesLevel1
 
 	-- OUTPUT
 Quarter1StartDate		Quarter1EndDate
@@ -58,7 +55,6 @@ Quarter1StartDate		Quarter1EndDate
 
 	Query #1.1.1: Below is the list of dates used to generate the start and end dates from Query #1.1
 	-------------
-
 	-- 1-JAN-2024
 SELECT DATEADD(QUARTER, DATEDIFF(QUARTER, 0, DATEADD(YEAR, DATEDIFF(YEAR, 0, GETDATE()), 0)) + 0, 0)		-- <--- used as QuarterStartEndDatesLevel1, see Query #1.1
 
@@ -91,7 +87,6 @@ SELECT DATEADD(QUARTER, 4, DATEADD(DAY, - 1 , DATEADD(YEAR, DATEDIFF(YEAR, 0, GE
 
 
 
-
 	Query #1.2: We generate the column needed for the iteration process using column [AdventureWorks2022].[Person].[BusinessEntity] and the iteration process will be managed by the WHERE clause
 	-----------
 SELECT ROW_NUMBER() OVER(ORDER BY BusinessEntityID) AS Position			-- IterationLevel1
@@ -112,6 +107,7 @@ Position
 20777
 (end of results)
 (20777 rows affected)
+
 
 
 
