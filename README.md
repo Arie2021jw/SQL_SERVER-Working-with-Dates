@@ -11,4 +11,5 @@ List of examples:
 8) Creating a calendar for current month using function GENERATE_SERIES, DATE functions, AGGREGATION functions, pivoting via CASE statements
 9) Retrieving dates of a specific weekday in a year using function GENERATE_SERIES.
 10) Retrieving dates of first and last occurrences for a specific weekday in a month using function GENERATE_SERIES.
-11) Retrieving start and end dates for all 4 quarters in a year using functions DATEADD, DATEDIFF, DAY, QUARTER, YEAR, GETDATE and 1 iteration
+11) Retrieving start and end dates for a specific quarter using functions MODULUS (%), DATEADD, MONTH, DAY, CAST, LEFT and UNION ALL operator.
+12) Retrieving start and end dates for all 4 quarters in a year using functions DATEADD, DATEDIFF, DAY, QUARTER, YEAR, GETDATE and 1 iteration.
