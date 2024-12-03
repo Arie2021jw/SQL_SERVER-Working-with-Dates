@@ -1,4 +1,4 @@
-Exercise #1: Retrieve the start and end dates for a specific quarter using 
+Exercise #1: Retrieve the start and end dates for a specific quarter. 
 
 
 Solution #1: Retrieve the start and end dates for a specific quarter using functions MODULUS (%), DATEADD, MONTH, DAY, CAST, LEFT and UNION ALL operator
