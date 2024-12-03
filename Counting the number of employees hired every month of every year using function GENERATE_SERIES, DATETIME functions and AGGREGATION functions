@@ -1,13 +1,13 @@
 Exercise #1: Count the number of employees hired every month of every year, and including the months were no employees were hired.
 
 
-Solution #1: Count the number of employees hired every month of every year using functions GENERATE_SERIES, DATEADD, DATEDIFF, DAY, MONTH, DATEPART, MIN, MAX, CAST
+Solution #1: Count the number of employees hired every month of every year using functions GENERATE_SERIES, DATEADD, DATEDIFF, DAY, MONTH, DATEPART, MIN, MAX, CAST.
 
 Table used: [AdventureWorks2022].[HumanResources].[Employee]
 
 	Query #1: 
 	---------
-SELECT W.GeneratedDates						-- CountHireDatesLevel3 / CountHireDatesLevel2
+SELECT W.GeneratedDates							-- CountHireDatesLevel3 / CountHireDatesLevel2
 , SUM(CASE	WHEN Employee.FirstDayOfMonthOfHireDate IS NOT NULL 
 		THEN 1
 		ELSE 0
@@ -15,25 +15,24 @@ SELECT W.GeneratedDates						-- CountHireDatesLevel3 / CountHireDatesLevel2
 	) AS CountHireDates
 FROM ( 
 	(
-	SELECT										-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+	SELECT											-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 	CAST(DATEADD(DAY, value, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))) AS DATE) AS GeneratedDates
 	FROM GENERATE_SERIES(0
 				 , DATEDIFF(DAY
 					, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))
 					, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MAX(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0)))
-				, 1) 							-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+				, 1) 								-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 	) AS W	
 	LEFT JOIN 
 	(
-	SELECT DATEADD(DAY, -(DAY(HireDate) - 1), HireDate) AS FirstDayOfMonthOfHireDate
-	FROM [AdventureWorks2022].[HumanResources].[Employee]
+	SELECT DATEADD(DAY, -(DAY(HireDate) - 1), HireDate) AS FirstDayOfMonthOfHireDate	-- FirstDayOfMonthForEveryHiredateLevel1
+	FROM [AdventureWorks2022].[HumanResources].[Employee]					-- FirstDayOfMonthForEveryHiredateLevel1
 	) AS Employee
 		ON W.GeneratedDates = Employee.FirstDayOfMonthOfHireDate
 )
 WHERE DATEPART(DAY, W.GeneratedDates) = 1							-- CountHireDatesLevel2
 GROUP BY W.GeneratedDates
 ORDER BY W.GeneratedDates						-- CountHireDatesLevel3
-
 
 
 	-- OUTPUT
@@ -68,10 +67,7 @@ GeneratedDates		CountHireDates
 
 
 
-
 Below are the queries used step-by-step for this solution.
-
-
 
 	Query #1.1: We retrieve the first and last employee hired from table [AdventureWorks2022].[HumanResources].[Employee]
 	-----------
@@ -97,14 +93,13 @@ LastHireDate
 
 	Query #1.2: We generate the list of dates between the months of first and last hire dates using function GENERATE_SERIES
 	-----------
-SELECT						-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+SELECT									-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 CAST(DATEADD(DAY, value, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))) AS DATE) AS GeneratedDates
 FROM GENERATE_SERIES(0
 		     , DATEDIFF(DAY
 				, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))
 				, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MAX(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0)))
-		    , 1)			-- GenerateDatesBetweenFirstAndLastHireDateLevel1
-
+		    , 1)						-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 
 	-- OUTPUT
 GeneratedDates
@@ -123,7 +118,6 @@ GeneratedDates
 2013-05-01
 (end of results)
 (2527 rows affected)
-
 
 
 
@@ -156,11 +150,10 @@ There are 290 employees, each one with a HireDate, therefore, we get 290 rows.
 
 
 
-
-
 	Query #1.3.1: We calculated the FirstDayOfMonthOfHireDate on Query #1.3 using the logic of the below query.
 	-------------
 SELECT CAST(DATEADD(DAY, -(DAY(GETDATE() - 1)),GETDATE()) AS DATE) AS FirstDayofCurrentMonth
+
 
 
 	Query #1.3.2: Below we show step-by-step how we applied the above logic to column HireDate
@@ -172,7 +165,6 @@ SELECT HireDate
 , DATEADD(DAY, -(DAY(HireDate) - 1), HireDate) AS FirstDayOfMonthOfHireDate
 FROM [AdventureWorks2022].[HumanResources].[Employee]
 ORDER BY HireDate
-
 
 	-- OUTPUT
 HireDate	DayOfHireDate	DayOfHireDateMinus1	DayOfHireDateMinus1MultipliedByMinus1	FirstDayOfMonthOfHireDate
@@ -200,7 +192,7 @@ HireDate	DayOfHireDate	DayOfHireDateMinus1	DayOfHireDateMinus1MultipliedByMinus1
 
 	Query #1.4: We count the number of employees hired each month by (LEFT) JOINing Query #1.2 (list of dates between the months of first and last hire dates) and Query #1.3 (first day of the month for every Hiredate) and adding a Flag using a CASE statement
 	-----------
-SELECT W.GeneratedDates								-- CountHireDatesLevel2
+SELECT W.GeneratedDates						-- CountHireDatesLevel2
 , Employee.FirstDayOfMonthOfHireDate
 , CASE	WHEN Employee.FirstDayOfMonthOfHireDate IS NOT NULL 
 		THEN 1
@@ -208,13 +200,13 @@ SELECT W.GeneratedDates								-- CountHireDatesLevel2
 		END AS CountHireDates
 FROM ( 
 	(
-	SELECT								-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+	SELECT											-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 	CAST(DATEADD(DAY, value, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))) AS DATE) AS GeneratedDates
 	FROM GENERATE_SERIES(0
 				 , DATEDIFF(DAY
 					, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))
 					, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MAX(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0)))
-				, 1) 					-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+				, 1) 								-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 	) AS W	
 	LEFT JOIN 
 	(
@@ -223,7 +215,7 @@ FROM (
 	) AS Employee
 		ON W.GeneratedDates = Employee.FirstDayOfMonthOfHireDate
 )
-ORDER BY W.GeneratedDates				-- CountHireDatesLevel2
+ORDER BY W.GeneratedDates					-- CountHireDatesLevel2
 
 
 	-- OUTPUT
@@ -261,7 +253,6 @@ GeneratedDates	FirstDayOfMonthOfHireDate	CountHireDates
 
 
 
-
 	Query #1.5: We filter out all rows for dates on column "GeneratedDates" that have a DAY different than the first day of the month
 	-----------
 SELECT W.GeneratedDates						-- CountHireDatesLevel2
@@ -272,18 +263,18 @@ SELECT W.GeneratedDates						-- CountHireDatesLevel2
 		END AS CountHireDates
 FROM ( 
 	(
-	SELECT										-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+	SELECT											-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 	CAST(DATEADD(DAY, value, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))) AS DATE) AS GeneratedDates
 	FROM GENERATE_SERIES(0
 				 , DATEDIFF(DAY
 					, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MIN(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0))
 					, (SELECT DATEADD(MONTH, DATEDIFF(MONTH, 0, (SELECT MAX(HireDate) FROM [AdventureWorks2022].[HumanResources].[Employee])), 0)))
-				, 1) 							-- GenerateDatesBetweenFirstAndLastHireDateLevel1
+				, 1) 								-- GenerateDatesBetweenFirstAndLastHireDateLevel1
 	) AS W	
 	LEFT JOIN 
 	(
-	SELECT DATEADD(DAY, -(DAY(HireDate) - 1), HireDate) AS FirstDayOfMonthOfHireDate
-	FROM [AdventureWorks2022].[HumanResources].[Employee]
+	SELECT DATEADD(DAY, -(DAY(HireDate) - 1), HireDate) AS FirstDayOfMonthOfHireDate	-- FirstDayOfMonthForEveryHiredateLevel1
+	FROM [AdventureWorks2022].[HumanResources].[Employee]					-- FirstDayOfMonthForEveryHiredateLevel1
 	) AS Employee
 		ON W.GeneratedDates = Employee.FirstDayOfMonthOfHireDate
 )
