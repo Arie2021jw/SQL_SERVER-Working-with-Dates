@@ -1,7 +1,7 @@
 Exercise #1: Retrieve the list of employees that were hired on the same date and at least other 4 employees were hired on the same date.
 
 
-Solution #1: We retrieve the list employees that were hired on the same date along with at least other 4 employees using a Cartesian Product and functions DATENAME, YEAR, MONTH, WEEK, WEEKDAY, COUNT
+Solution #1: We retrieve the list employees that were hired on the same date along with at least other 4 employees using a Cartesian Product and functions DATENAME, YEAR, MONTH, WEEK, WEEKDAY, COUNT.
 
 Table used: [AdventureWorks2022].[HumanResources].[Employee]
 
@@ -50,7 +50,7 @@ Below are the queries used step-by-step for this solution.
 
 	Query #1.1: We retrieve the list of employees of employees hired on the same date using a Cartesian Product
 	-----------
-SELECT DISTINCT A.BusinessEntityID AS EmpIDA				-- EmployeesHiredOnSameDatesLevel1
+SELECT DISTINCT A.BusinessEntityID AS EmpIDA					-- EmployeesHiredOnSameDatesLevel1
 , A.JobTitle AS EmpJobTitleA
 , A.HireDate AS EmpHireDateA
 , B.BusinessEntityID AS EmpIDB
@@ -62,7 +62,7 @@ WHERE DATENAME(YEAR, A.HireDate) = DATENAME(YEAR, B.HireDate)
 	AND DATENAME(MONTH, A.HireDate) = DATENAME(MONTH, B.HireDate) 
 	AND DATENAME(WEEK, A.HireDate) = DATENAME(WEEK, B.HireDate)
 	AND DATENAME(WEEKDAY, A.HireDate) = DATENAME(WEEKDAY, B.HireDate)
-	AND A.BusinessEntityID <= B.BusinessEntityID			-- EmployeesHiredOnSameDatesLevel1
+	AND A.BusinessEntityID <= B.BusinessEntityID				-- EmployeesHiredOnSameDatesLevel1
 ORDER BY  A.BusinessEntityID, A.HireDate, B.BusinessEntityID
 
 
@@ -146,5 +146,4 @@ EmpIDA		EmpJobTitleA				NumberEmployeesHiredSameDay
 
 
 To retrieve only the employees that were hired on the same date along with at least other 4 employees, we would need to add the HAVING clause "HAVING COUNT(X.EmpIDA) >= 5" to Query #1.2.
-
 See the desired output on Query #1.
