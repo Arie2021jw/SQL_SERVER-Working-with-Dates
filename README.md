@@ -1,4 +1,4 @@
-This repository contains multiple examples on how SQL Server can be used to manipulate strings.
+This repository contains multiple examples on how SQL Server can be used to work with dates.
 
 List of examples:
 1) Adding and Subtracting Days, Months and Years to a date using function DATEADD.
