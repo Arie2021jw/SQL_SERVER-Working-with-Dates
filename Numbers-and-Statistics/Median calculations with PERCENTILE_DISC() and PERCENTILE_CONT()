@@ -14,7 +14,7 @@ SELECT DISTINCT Y.DepartmentName			-- PercentRank()_CumeDist()Level3
 , PERCENTILE_DISC(0.5) WITHIN GROUP (ORDER BY Y.SalaryRate) OVER (PARTITION BY Y.DepartmentName) AS MedianPercentileDisc
 , PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY Y.SalaryRate) OVER (PARTITION BY Y.DepartmentName) AS MedianPercentileCont
 FROM (
-	SELECT X.BusinessEntityID							-- UniqueSalaryRatesLevel2
+	SELECT X.BusinessEntityID										-- UniqueSalaryRatesLevel2
 	, X.DepartmentName 
 	, X.Rate AS SalaryRate
 	FROM (
@@ -33,7 +33,7 @@ FROM (
 		INNER JOIN [AdventureWorks2022].[HumanResources].[EmployeePayHistory] AS EmployeePayHistory
 			ON EmployeeDepartmentHistory.BusinessEntityID = EmployeePayHistory.BusinessEntityID	-- OriginalTablesLevel1
 		) AS X
-	WHERE RowNumber = 1								-- UniqueSalaryRatesLevel2
+	WHERE RowNumber = 1											-- UniqueSalaryRatesLevel2
 	) AS Y						-- PercentRank()_CumeDist()Level3
 
 
@@ -60,6 +60,7 @@ Tool Design			25			26.9231
 
 
 	Comments on above results:
+	--------------------------
 1) PERCENTILE_DISC function: calculates a specific percentile for values sorted within an entire rowset or within a group of distinct rows in a partition. 
 For a specific percentile value, say P = 0.5, the function sorts the values (Y.SalaryRate) in the ORDER BY clause, then, it returns the value with the smallest cumulative distribution (CUME_DIST) value that is greater than or equal to P = 0.5.
 
