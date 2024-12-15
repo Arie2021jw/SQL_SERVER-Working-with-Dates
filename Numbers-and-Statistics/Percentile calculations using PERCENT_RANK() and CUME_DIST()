@@ -1,13 +1,13 @@
-Exercise #1: Calculating the salary percentiles for each employee for the whole company.
+Exercise #1: Calculating the salary percentiles for each employee on the company.
 
 
-Solution #1.1, Query #1.1:
+Solution #1.1, Query #1.1: We calculate the salary percentiles for each employee using functions PERCENT_RANK and CUME_DIST.
 
 SELECT DISTINCT Y.SalaryRate						-- PercentRank()_CumeDist()Level3
 , ROUND(PERCENT_RANK() OVER (ORDER BY Y.SalaryRate),2) AS SalaryRatePercentRank
 , ROUND(CUME_DIST() OVER (ORDER BY Y.SalaryRate), 2) AS SalaryRateCummulativeDistribution
 FROM (
-	SELECT X.BusinessEntityID									-- UniqueSalaryRatesLevel2
+	SELECT X.BusinessEntityID											-- UniqueSalaryRatesLevel2
 	, X.Rate AS SalaryRate
 	FROM (
 		SELECT EmployeeDepartmentHistory.BusinessEntityID							-- OriginalTablesLevel1
@@ -25,7 +25,7 @@ FROM (
 		INNER JOIN [AdventureWorks2022].[HumanResources].[EmployeePayHistory] AS EmployeePayHistory
 			ON EmployeeDepartmentHistory.BusinessEntityID = EmployeePayHistory.BusinessEntityID		-- OriginalTablesLevel1
 		) AS X
-	WHERE RowNumber = 1										-- UniqueSalaryRatesLevel2
+	WHERE RowNumber = 1												-- UniqueSalaryRatesLevel2
 	) AS Y								-- PercentRank()_CumeDist()Level3
 
 
@@ -80,11 +80,10 @@ In this example, the query set or partition is the whole company.
 
 
 
-
 Exercise #2: Calculating the salary percentiles for each employee for departments "Information Services" and "Production".
 
 
-Solution #2.1, Query #2.1:
+Solution #2.1, Query #2.1: We calculate the salary percentiles for employees on departments "Information Services" and "Production" using functions PERCENT_RANK and CUME_DIST.
 
 SELECT Y.DepartmentName							-- PercentRank()_CumeDist()Level3
 , Y.BusinessEntityID
@@ -93,7 +92,7 @@ SELECT Y.DepartmentName							-- PercentRank()_CumeDist()Level3
 , ROUND(CUME_DIST() OVER (PARTITION BY Y.DepartmentName ORDER BY Y.SalaryRate), 2) AS SalaryRateCummulativeDistribution
 FROM (
 	SELECT X.DepartmentName
-	, X.BusinessEntityID									-- UniqueSalaryRatesLevel2
+	, X.BusinessEntityID											-- UniqueSalaryRatesLevel2
 	, X.Rate AS SalaryRate
 	FROM (
 		SELECT EmployeeDepartmentHistory.BusinessEntityID						-- OriginalTablesLevel1
@@ -111,7 +110,7 @@ FROM (
 		INNER JOIN [AdventureWorks2022].[HumanResources].[EmployeePayHistory] AS EmployeePayHistory
 			ON EmployeeDepartmentHistory.BusinessEntityID = EmployeePayHistory.BusinessEntityID	-- OriginalTablesLevel1
 		) AS X
-	WHERE RowNumber = 1									-- UniqueSalaryRatesLevel2
+	WHERE RowNumber = 1											-- UniqueSalaryRatesLevel2
 	) AS Y	
 WHERE Y.DepartmentName IN ('Sales','Production')
 ORDER BY Y.DepartmentName, Y.SalaryRate DESC				-- PercentRank()_CumeDist()Level3
@@ -133,22 +132,22 @@ Production		25			84.1346		1				1
 Production		87			25		0.88				0.99
 Production		93			25		0.88				0.99
 Production		78			25		0.88				0.99
-........................................................................................................... TRUNCATED RESULTS ......
+............................................................................................................................ TRUNCATED RESULTS ......
 Production		85			15		0.74				0.88
 Production		86			15		0.74				0.88
 Production		135			14		0.61				0.73
 Production		136			14		0.61				0.73
-........................................................................................................... TRUNCATED RESULTS ......
+............................................................................................................................ TRUNCATED RESULTS ......
 Production		185			14		0.61				0.73
 Production		48			13.45		0.52				0.61
-........................................................................................................... TRUNCATED RESULTS ......
+............................................................................................................................ TRUNCATED RESULTS ......
 Production		105			13.45		0.52				0.61
 Production		106			13.45		0.52				0.61
 Production		107			13.45		0.52				0.61
 Production		41			12.45		0.37				0.51
 Production		42			12.45		0.37				0.51
 Production		43			12.45		0.37				0.51
-........................................................................................................... TRUNCATED RESULTS ......
+............................................................................................................................ TRUNCATED RESULTS ......
 Production		75			9.5		0				0.14
 Production		76			9.5		0				0.14
 Production		77			9.5		0				0.14
