@@ -1,6 +1,11 @@
-This repository contains multiple examples on how SQL Server can be used to work with dates.
+This repository contains multiple examples on how SQL Server can be used to work with:
+1) Dates
+2) Numbers and statistics
 
-List of examples:
+
+Below is the list of examples for each folder.
+
+Folder #1: Dates:
 1) Adding and Subtracting days, months and years to a date
 2) Calculate first day, last day and second to last day of current month
 3) Counting the number of business days between 2 dates
@@ -15,3 +20,14 @@ List of examples:
 12) Retrieving the start and end dates for a specific quarter
 13) Retrieving the start and end dates for all 4 quarters in a year
 14) Retrieving the lists of employees that were hired on the same date (min. 5 employees)
+
+
+Folder #1: Numbers and statistics.
+1) Average calculations
+2) Creating horizontal histograms
+3) Creating vertical histograms
+4) Highest and lowest dollar value sales orders calculations
+5) Median calculations using PERCENTILE_DISC() and PERCENTILE_CONT()
+6) Mode calculations using DENSE_RANK()
+7) Percentile calculations using PERCENT_RANK() and CUME_DIST()
+8) Running totals calculations
