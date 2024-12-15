@@ -5,7 +5,7 @@ This repository contains multiple examples on how SQL Server can be used to work
 
 Below is the list of examples for each folder.
 
-Folder #1: Dates:
+Folder #1: Dates
 1) Adding and Subtracting days, months and years to a date
 2) Calculate first day, last day and second to last day of current month
 3) Counting the number of business days between 2 dates
@@ -22,7 +22,7 @@ Folder #1: Dates:
 14) Retrieving the lists of employees that were hired on the same date (min. 5 employees)
 
 
-Folder #2: Numbers and Statistics.
+Folder #2: Numbers and Statistics
 1) Average calculations
 2) Creating horizontal histograms
 3) Creating vertical histograms
