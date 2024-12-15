@@ -22,7 +22,7 @@ Folder #1: Dates:
 14) Retrieving the lists of employees that were hired on the same date (min. 5 employees)
 
 
-Folder #1: Numbers and statistics.
+Folder #2: Numbers and Statistics.
 1) Average calculations
 2) Creating horizontal histograms
 3) Creating vertical histograms
