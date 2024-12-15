@@ -7,7 +7,6 @@ SELECT FORMAT(ROUND(MAX(SalesOrderHeader.[TotalDue]), 2, 2), '#,#.##') AS Highes
 , FORMAT(ROUND(MIN(SalesOrderHeader.[TotalDue]), 2, 2), '#,#.##') AS LowestDollarValueSales
 FROM [AdventureWorks2022].[Sales].[SalesOrderHeader] AS SalesOrderHeader
 
-
 	-- OUTPUT
 HighestDollarValueSales	LowestDollarValueSales
 187,487.82	1.51
@@ -17,8 +16,8 @@ HighestDollarValueSales	LowestDollarValueSales
 
 
 
-
 Exercise #2: Calculate the historical highest and lowest dollar value sales orders for all groups of countries.
+
 
 Solution #2.1: We calculate the historical highest and lowest dollar value sales orders using Functions MAX and MIN and GROUP BY clause.
 
@@ -29,7 +28,6 @@ FROM [AdventureWorks2022].[Sales].[SalesOrderHeader] AS SalesOrderHeader
 LEFT JOIN [AdventureWorks2022].[Sales].[SalesTerritory] AS SalesTerritory
 	ON SalesOrderHeader.TerritoryID = SalesTerritory.TerritoryID 
 GROUP BY SalesTerritory.[Group]
-
 
 	-- OUTPUT
 Group		HighestDollarValueSales		LowestDollarValueSales
@@ -42,8 +40,8 @@ Europe		166,537.08			3.03
 
 
 
-
 Exercise #3: Calculate the historical highest and lowest dollar value sales orders for every country
+
 
 Solution #3.1: We calculate the historical highest and lowest dollar value sales orders using Functions MAX and MIN and GROUP BY clause
 
@@ -61,7 +59,6 @@ LEFT JOIN [AdventureWorks2022].[Person].[StateProvince] AS StateProvince
 GROUP BY SalesTerritory.[Group], CountryRegion.[Name]
 ORDER BY SalesTerritory.[Group], CountryRegion.[Name]
 
-
 	-- OUTPUT
 Group		CountryName		HighestDollarValueSales		LowestDollarValueSales
 Europe		France			166,537.08			4.4
@@ -76,8 +73,8 @@ Pacific		Australia		71,729.85			2.53
 
 
 
-
 Exercise #4: Calculate the historical highest and lowest dollar value sales orders for every State or Province
+
 
 Solution #4.1: We calculate the historical highest and lowest dollar value sales orders using Functions MAX and MIN and GROUP BY clause
 
@@ -100,7 +97,6 @@ LEFT JOIN [AdventureWorks2022].[Person].[StateProvince] AS [StateProvince]
 	) AS X
 GROUP BY StateProvinceName
 
-
 	-- OUTPUT
 StateProvinceName	HighestDollarValueSales		LowestDollarValueSales
 Moselle			3,953.98			5.51
@@ -110,7 +106,7 @@ Wisconsin		54,611.53			76.16
 Seine et Marne		13,855.97			5.51
 Brandenburg		38,066.51			5.51
 Maine			76,861.57			11,086.32
-.............................................. TRUNCATED RESULTS ................
+........................................................................... TRUNCATED RESULTS .....
 Nevada			109,948.74			23.17
 Victoria		33,550.67			2.53
 Bayern			77,823.99			4.4
