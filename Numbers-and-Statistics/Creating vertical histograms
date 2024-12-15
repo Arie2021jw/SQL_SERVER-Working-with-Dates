@@ -1,7 +1,7 @@
-Exercise #1: Create a horizontal histogram for employees by departments.
+Exercise #1: Create a vertical histogram for employees by departments.
 
 
-Solution #1:
+Solution #1: We create a vertical histogram for employees by department using functions ROW_NUMBER, COALESCE, MAX and CASE statements.
 
 Tables used:
 1) [AdventureWorks2022].[HumanResources].[EmployeeDepartmentHistory]
@@ -44,7 +44,7 @@ FROM (
 	, CASE WHEN Y.DepartmentName = 'Shipping and Receiving' THEN '*' ELSE NULL END AS dept_ShipReceiv
 	, CASE WHEN Y.DepartmentName = 'Tool Design' THEN '*' ELSE NULL END AS dept_ToolDesign
 	FROM (
-		SELECT X.BusinessEntityID					-- RemoveDuplicatesLevel2
+		SELECT X.BusinessEntityID									-- RemoveDuplicatesLevel2
 		, X.DepartmentName
 		FROM (
 			SELECT EmployeeDeptHistory.BusinessEntityID						-- OriginalTablesLevel1
@@ -59,7 +59,7 @@ FROM (
 				ON EmployeeDeptHistory.BusinessEntityID = Employee.BusinessEntityID		-- OriginalTablesLevel1
 			) AS X
 			WHERE RowNumber = 1
-			GROUP BY X.BusinessEntityID, X.DepartmentName		-- RemoveDuplicatesLevel2
+			GROUP BY X.BusinessEntityID, X.DepartmentName						-- RemoveDuplicatesLevel2
 		) AS Y												-- AsterisksNULLsLevel3
 	) AS Z
 GROUP BY Z.RN									-- VerticalHistogramLevel4
